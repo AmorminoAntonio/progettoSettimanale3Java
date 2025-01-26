@@ -12,6 +12,7 @@ public class Utente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -27,7 +28,7 @@ public class Utente {
     private String numeroTessera;
 
     @OneToMany(mappedBy = "utente")
-    private List<Prestito> listaPrestiti;
+    private List<Prestito> elementiPresiInPrestito;
 
 
     public Utente() {
@@ -38,6 +39,14 @@ public class Utente {
         this.cognome = cognome;
         this.dataDiNascita = dataDiNascita;
         this.numeroTessera = numeroTessera;
+    }
+
+    public List<Prestito> getElementiPresiInPrestito() {
+        return elementiPresiInPrestito;
+    }
+
+    public void setElementiPresiInPrestito(List<Prestito> elementiPresiInPrestito) {
+        this.elementiPresiInPrestito = elementiPresiInPrestito;
     }
 
     public Long getId() {

@@ -3,7 +3,7 @@ package org.example.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "prestiti")
@@ -11,6 +11,7 @@ public class Prestito {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, name = "prestito_id")
     private Long id;
 
     @ManyToOne
@@ -19,22 +20,23 @@ public class Prestito {
 
     @ManyToMany
     @JoinTable(
-            name = "catalogo_prestiti",
+            name = "elemento_del_catalogo_prestiti",
             joinColumns = @JoinColumn(name = "prestito_id"),
-            inverseJoinColumns = @JoinColumn(name = "catalogo_id")
+            inverseJoinColumns = @JoinColumn(name = "elemento_catalogo_id")
     )
-    private List<Catalogo> ElementoPrestato;
+    private Set<Catalogo> elementoPrestato;
 
     private LocalDate DataInizioPrestito;
     private LocalDate DataRestituzionePrevista;
+    @Column(nullable = true)
     private LocalDate DataRestituzioneEffettiva;
 
     public Prestito() {
     }
 
-    public Prestito(Utente utente, List<Catalogo> elementoPrestato, LocalDate dataInizioPrestito, LocalDate dataRestituzionePrevista, LocalDate dataRestituzioneEffettiva) {
+    public Prestito(Utente utente, Set<Catalogo> elementoPrestato, LocalDate dataInizioPrestito, LocalDate dataRestituzionePrevista, LocalDate dataRestituzioneEffettiva) {
         this.utente = utente;
-        this.ElementoPrestato = elementoPrestato;
+        this.elementoPrestato = elementoPrestato;
         this.DataInizioPrestito = dataInizioPrestito;
         this.DataRestituzionePrevista = dataRestituzionePrevista;
         this.DataRestituzioneEffettiva = dataRestituzioneEffettiva;
@@ -56,12 +58,12 @@ public class Prestito {
         this.utente = utente;
     }
 
-    public List<Catalogo> getElementoPrestato() {
-        return ElementoPrestato;
+    public Set<Catalogo> getElementoPrestato() {
+        return elementoPrestato;
     }
 
-    public void setElementoPrestato(List<Catalogo> elementoPrestato) {
-        ElementoPrestato = elementoPrestato;
+    public void setElementoPrestato(Set<Catalogo> elementoPrestato) {
+        this.elementoPrestato = elementoPrestato;
     }
 
     public LocalDate getDataInizioPrestito() {
@@ -94,7 +96,7 @@ public class Prestito {
         return "Prestito{" +
                 "id=" + id +
                 ", utente=" + utente +
-                ", ElementoPrestato=" + ElementoPrestato +
+                ", ElementoPrestato=" + elementoPrestato +
                 ", DataInizioPrestito=" + DataInizioPrestito +
                 ", DataRestituzionePrevista=" + DataRestituzionePrevista +
                 ", DataRestituzioneEffettiva=" + DataRestituzioneEffettiva +

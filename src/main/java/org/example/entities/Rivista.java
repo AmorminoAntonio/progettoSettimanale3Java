@@ -6,9 +6,7 @@ import org.example.enumerated.TipoPeriodicità;
 import javax.persistence.*;
 
 
-
 @Entity
-@Table(name = "riviste")
 
 public class Rivista extends Catalogo {
 

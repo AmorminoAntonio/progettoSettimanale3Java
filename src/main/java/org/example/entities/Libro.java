@@ -2,12 +2,11 @@ package org.example.entities;
 
 
 import org.example.enumerated.TipoGenere;
+
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "libri")
-
 public class Libro extends Catalogo {
 
 

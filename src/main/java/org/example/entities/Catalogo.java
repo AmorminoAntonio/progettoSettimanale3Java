@@ -1,11 +1,11 @@
 package org.example.entities;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
+@Table(name = "catalogo")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "catalogo")
 public abstract class Catalogo {
 
     @Id
@@ -16,22 +16,19 @@ public abstract class Catalogo {
     private String titolo;
 
     @Column(nullable = false)
-    private int dataPubblicazione;
+    private int annoPubblicazione;
 
     @Column(nullable = false)
     private int numeroPagine;
-
-    @ManyToMany(mappedBy = "elementoPrestato")
-    private List<Prestito> prestiti;
 
 
     public Catalogo() {
     }
 
 
-    public Catalogo(String titolo, int dataPubblicazione, int numeroPagine) {
+    public Catalogo(String titolo, int annoPubblicazione, int numeroPagine) {
         this.titolo = titolo;
-        this.dataPubblicazione = dataPubblicazione;
+        this.annoPubblicazione = annoPubblicazione;
         this.numeroPagine = numeroPagine;
     }
 
@@ -51,12 +48,12 @@ public abstract class Catalogo {
         this.titolo = titolo;
     }
 
-    public int getDataPubblicazione() {
-        return dataPubblicazione;
+    public int getAnnoPubblicazione() {
+        return annoPubblicazione;
     }
 
-    public void setDataPubblicazione(int dataPubblicazione) {
-        this.dataPubblicazione = dataPubblicazione;
+    public void setAnnoPubblicazione(int annoPubblicazione) {
+        this.annoPubblicazione = annoPubblicazione;
     }
 
     public int getNumeroPagine() {
@@ -72,7 +69,7 @@ public abstract class Catalogo {
         return "Catalogo{" +
                 "codIsbn=" + codIsbn +
                 ", titolo='" + titolo + '\'' +
-                ", dataPubblicazione=" + dataPubblicazione +
+                ", dataPubblicazione=" + annoPubblicazione +
                 ", numeroPagine=" + numeroPagine +
                 '}';
     }
