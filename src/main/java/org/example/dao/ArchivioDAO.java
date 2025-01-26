@@ -1,14 +1,11 @@
 package org.example.dao;
 
 import org.example.entities.Catalogo;
-import org.example.entities.Libro;
 import org.example.entities.Prestito;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public class ArchivioDAO {
 
@@ -27,30 +24,25 @@ public class ArchivioDAO {
     }
 
 
-    public void aggiornaElementoCatalogo(Catalogo c) {
-        em.getTransaction().begin();
-        em.merge(c);
-        em.getTransaction().commit();
-        System.out.println(c.toString() + " <----Elemento aggiornato");
-    }
-
-
     public void rimuoviElementoPerISBN(Long isbn) {
         try {
-            Catalogo elementoDaRimuovere = em.createQuery("SELECT c FROM Catalogo c WHERE c.codIsbn = :isbn", Catalogo.class)
+            Catalogo oggettoDaRimuovere = em.createQuery("SELECT c FROM Catalogo c WHERE c.codIsbn = :isbn", Catalogo.class)
                     .setParameter("isbn", isbn)
                     .getSingleResult();
-            em.getTransaction().begin();
-            em.remove(elementoDaRimuovere);
-            em.getTransaction().commit();
-            System.out.println("Elemento rimosso con ISBN: " + isbn);
+            if (oggettoDaRimuovere != null) {
+                em.getTransaction().begin();
+                em.remove(oggettoDaRimuovere);
+                em.getTransaction().commit();
+                System.out.println("Elemento rimosso con ISBN: " + oggettoDaRimuovere.getCodIsbn());
+            }
+
         } catch (NoResultException e) {
             System.out.println("Elemento non trovato con ISBN: " + isbn);
         }
     }
 
 
-    public Catalogo ricercaPerISBN(Long isbn) {
+    public void ricercaPerISBN(Long isbn) {
         try {
             Catalogo oggettoRicercato = em.createQuery("SELECT c FROM Catalogo c WHERE c.codIsbn = :isbn", Catalogo.class)
                     .setParameter("isbn", isbn)
@@ -61,7 +53,6 @@ public class ArchivioDAO {
         } catch (NoResultException e) {
             System.out.println("Elemento non trovato con ISBN: " + isbn);
         }
-        return null;
     }
 
 
@@ -99,32 +90,29 @@ public class ArchivioDAO {
     }
 
 
-    public List<Catalogo> ricercaPerTitoloOparteDiEsso(String titolo) {
-        return em.createQuery("SELECT c FROM Catalogo c WHERE c.titolo LIKE :titolo", Catalogo.class)
-                .setParameter("titolo", "%" + titolo + "%")
-                .getResultList();
+    public void ricercaPerTitolo(String titolo) {
+        try {
+            List<Catalogo> elementoConTitolo = em.createQuery("SELECT c FROM Catalogo c WHERE c.titolo LIKE :titolo", Catalogo.class)
+                    .setParameter("titolo", "%" + titolo + "%")
+                    .getResultList();
+            if (elementoConTitolo.isEmpty()) {
+                System.out.println("Nessun libro trovato per l'autore: " + titolo);
+            } else {
+                System.out.println("Libri trovati per l'autore: " + titolo);
+                elementoConTitolo.forEach(System.out::println);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
-    public List<Catalogo> ricercaElementiInPrestitoPerTesseraUtente(String numeroTessera) {
-        return em.createQuery(
-                        "SELECT c FROM Catalogo c " +
-                                "JOIN c.prestiti p " +
-                                "JOIN p.utente u " +
-                                "WHERE u.numeroTessera = :numeroTessera AND p.DataRestituzioneEffettiva IS NULL",
-                        Catalogo.class)
-                .setParameter("numeroTessera", numeroTessera)
-                .getResultList();
+    public void ricercaElementiInPrestitoPerTesseraUtente(String numeroTessera) {
+
     }
 
 
-    public List<Prestito> ricercaPrestitiScadutiNonRestituiti() {
-        LocalDate oggi = LocalDate.now();
-        return em.createQuery(
-                        "SELECT p FROM Prestito p " +
-                                "WHERE p.DataRestituzionePrevista < :oggi AND p.DataRestituzioneEffettiva IS NULL",
-                        Prestito.class)
-                .setParameter("oggi", oggi)
-                .getResultList();
+    public void ricercaPrestitiScadutiNonRestituiti() {
+
     }
 }

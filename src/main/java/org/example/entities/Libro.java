@@ -7,8 +7,12 @@ import javax.persistence.*;
 
 
 @Entity
+
 public class Libro extends Catalogo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long codIsbn;
 
     @Column(name = "autore", nullable = false)
     private String autore;
@@ -24,6 +28,16 @@ public class Libro extends Catalogo {
         super(titolo, dataPubblicazione, numeroPagine);
         this.autore = autore;
         this.genere = genere;
+    }
+
+    @Override
+    public Long getCodIsbn() {
+        return codIsbn;
+    }
+
+    @Override
+    public void setCodIsbn(Long codIsbn) {
+        this.codIsbn = codIsbn;
     }
 
     public String getAutore() {

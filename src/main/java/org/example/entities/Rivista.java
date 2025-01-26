@@ -10,6 +10,10 @@ import javax.persistence.*;
 
 public class Rivista extends Catalogo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long codIsbn;
+
 
     @Enumerated(EnumType.STRING)
     private TipoPeriodicità periodicità;
@@ -21,6 +25,16 @@ public class Rivista extends Catalogo {
     public Rivista(String titolo, int dataPubblicazione, int numeroPagine, TipoPeriodicità periodicità) {
         super(titolo, dataPubblicazione, numeroPagine);
         this.periodicità = periodicità;
+    }
+
+    @Override
+    public Long getCodIsbn() {
+        return codIsbn;
+    }
+
+    @Override
+    public void setCodIsbn(Long codIsbn) {
+        this.codIsbn = codIsbn;
     }
 
     public TipoPeriodicità getPeriodicità() {

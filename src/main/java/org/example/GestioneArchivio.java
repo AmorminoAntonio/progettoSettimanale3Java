@@ -49,19 +49,17 @@ public class GestioneArchivio {
 
         LocalDate dataInizioPrestito = LocalDate.of(2024, 11, 2);
 
-
 //        elementoPrestato.add(archivioDao.ricercaPerISBN(5L));
 //        elementoPrestato.add(archivioDao.ricercaPerISBN(6L));
 //        elementoPrestato.add(archivioDao.ricercaPerISBN(7L));
 //        elementoPrestato.add(archivioDao.ricercaPerISBN(8L));
 //        elementoPrestato.add(archivioDao.ricercaPerISBN(9L));
 
-
         Prestito p = new Prestito(utenteDao.getById(12L), elementoPrestato, dataInizioPrestito, dataInizioPrestito.plusDays(30), LocalDate.of(2025, 1, 24));
         //prestitoDao.aggiungiPrestito(p);
 
 
-        // LANCIO dei metodi per query.
+        // LANCIO DEI METODI PER QUERY GESTIONALI.
 
         // Qui sto aggiungendo un elemento ... (1)
 
@@ -79,28 +77,35 @@ public class GestioneArchivio {
 
         //--------------------------------------------------
 
-        // Qui elimino un elemento dal catalogo invece ... (2)
-
-        // archivioDao.rimuoviElementoPerISBN(10L);
+        // Qui elimino un elemento dal catalogo ... (2)
+          archivioDao.rimuoviElementoPerISBN(12L);
 
         //---------------------------------------------------
 
         // Qui sto ricercando un elemento tramite il codice univoco ... (3)
-
-        // archivioDao.ricercaPerISBN(11L);
+        //archivioDao.ricercaPerISBN(12L);
 
 
         //----------------------------------------------------
 
         // Qui ricerco per l'anno di pubblicazione... (4)
-
         // archivioDao.ricercaPerAnnoPubblicazione(2007);
 
         //-----------------------------------------------------
 
-        // Qui
+        // Qui ricerco libro/i tramite il suo autore... (5)
+        // archivioDao.ricercaPerAutore("Ivano");
 
-        archivioDao.ricercaPerAutore("Ivano");
+        //-----------------------------------------------------
+
+        // Qui ricerco elemento tramite il titolo... (6)
+        // archivioDao.ricercaPerTitolo("Lit");
+
+        //-----------------------------------------------------
+
+        // Qui ricerco per numero di tessera utente... (7)
+
+         //archivioDao.ricercaElementiInPrestitoPerTesseraUtente("0635024772");
 
 
 

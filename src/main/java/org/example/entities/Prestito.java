@@ -26,8 +26,11 @@ public class Prestito {
     )
     private Set<Catalogo> elementoPrestato;
 
+
     private LocalDate DataInizioPrestito;
+
     private LocalDate DataRestituzionePrevista;
+
     @Column(nullable = true)
     private LocalDate DataRestituzioneEffettiva;
 
