@@ -78,12 +78,12 @@ public class GestioneArchivio {
         //--------------------------------------------------
 
         // Qui elimino un elemento dal catalogo ... (2)
-          archivioDao.rimuoviElementoPerISBN(12L);
+        // archivioDao.rimuoviElementoPerISBN(12L);
 
         //---------------------------------------------------
 
         // Qui sto ricercando un elemento tramite il codice univoco ... (3)
-        //archivioDao.ricercaPerISBN(12L);
+        // archivioDao.ricercaPerISBN(12L);
 
 
         //----------------------------------------------------
@@ -104,8 +104,13 @@ public class GestioneArchivio {
         //-----------------------------------------------------
 
         // Qui ricerco per numero di tessera utente... (7)
+        // archivioDao.ricercaPrestitiTramiteNumeroTessera("3404558384");
 
-         //archivioDao.ricercaElementiInPrestitoPerTesseraUtente("0635024772");
+        //-------------------------------------------------------
+
+        // Qui ricerco dei prestiti scaduti senza riporto... (8)
+        // archivioDao.ricercaPrestitiScadutiNonRestituiti();
+
 
 
 
